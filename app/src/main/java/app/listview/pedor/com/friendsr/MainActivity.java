@@ -1,7 +1,10 @@
 package app.listview.pedor.com.friendsr;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import java.io.File;
@@ -19,14 +22,37 @@ public class MainActivity extends AppCompatActivity {
         String[] names = {"Arya", "Cersei", "Daenerys", "Jaime", "Jon", "Jorah", "Margaery",
                           "Melisandre", "Sansa", "Tyrion"};
 
+        // Create a bios for every person
+        String[] bios = {"hey ik ben dat kleine meisje dat helemaal doordraait",
+                "Ben al in een relatie met mn broer",
+                "Ben al in een relatie met mn draken ofzo",
+                "Vroeger gebruikte ik mn hand, maar moet nu wat anders zoeken",
+                "Weet ik veel", "Ik ben verdikkeme nog steeds single",
+                "Ik probeer macht te krijgen door rare te glimlachen",
+                "ik hoor in een gesticht", "Ik ben jong en ik wil wat",
+                "Ik ben eigenlijk helemaal niet zo heel erg lang"};
+
         // Create friends in loop based on the names
-        for(String name : names) {
-            friends.add(new Friend(name, "kaas", getResources().getIdentifier(name.toLowerCase(),
+        for(int i=0; i<10; i++) {
+            String name = names[i];
+            String bio = bios[i];
+            friends.add(new Friend(name, bio, getResources().getIdentifier(name.toLowerCase(),
                     "drawable", getPackageName())));
         }
         FriendsAdapter adapter = new FriendsAdapter(this, R.layout.grid_item, friends);
         GridView grid = findViewById(R.id.grid);
         grid.setAdapter(adapter);
+        grid.setOnItemClickListener(new GridItemClickListener());
 
+    }
+    private class GridItemClickListener implements AdapterView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            Friend clickedFriend = (Friend) adapterView.getItemAtPosition(i);
+            System.out.println(clickedFriend.getName());
+            Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+            intent.putExtra("clicked_friend", clickedFriend);
+            startActivity(intent);
+        }
     }
 }
