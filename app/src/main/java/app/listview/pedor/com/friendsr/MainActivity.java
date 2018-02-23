@@ -2,6 +2,10 @@ package app.listview.pedor.com.friendsr;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.GridView;
+
+import java.io.File;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -9,5 +13,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ArrayList<Friend> friends = new ArrayList<>();
+
+        // Create array with names so we can loop through it
+        String[] names = {"Arya", "Cersei", "Daenerys", "Jaime", "Jon", "Jorah", "Margaery",
+                          "Melisandre", "Sansa", "Tyrion"};
+
+        // Create friends in loop based on the names
+        for(String name : names) {
+            friends.add(new Friend(name, "kaas", getResources().getIdentifier(name.toLowerCase(),
+                    "drawable", getPackageName())));
+        }
+        FriendsAdapter adapter = new FriendsAdapter(this, R.layout.grid_item, friends);
+        GridView grid = findViewById(R.id.grid);
+        grid.setAdapter(adapter);
+
     }
 }
