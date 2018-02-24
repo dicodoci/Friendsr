@@ -44,7 +44,6 @@ public class ProfileActivity extends AppCompatActivity {
     private class RatingBarChangeListener implements RatingBar.OnRatingBarChangeListener {
         @Override
         public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-            System.out.println("pls no fuck");
             editor.putFloat(retrievedFriend.getName(),v);
             editor.apply();
             retrievedFriend.setRating(v);
